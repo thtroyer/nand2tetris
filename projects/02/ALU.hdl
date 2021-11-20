@@ -55,5 +55,11 @@ CHIP ALU {
     // Negate, then pick correct output
     Not16(in=fResult, out=fResultNot);
     
-    Mux16(a=fResult, b=fResultNot, sel=no, out=out);
+    // ALU output
+    Mux16(a=fResult, b=fResultNot, sel=no, out=out, out=output, out[15]=ng);
+    
+    // ZR flag, if output is 0
+    Or16Way(in=output, out=zrNot);
+    Not(in=zrNot, out=zr);
+    
 }
